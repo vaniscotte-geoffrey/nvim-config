@@ -6,7 +6,8 @@ local lspservers = {
   "html",
   "lua_ls",
   "ts_ls",
-  "jdtls"
+  "jdtls",
+  "emmet_ls"
 }
 
 local function lsphandlers(lspconfig)
