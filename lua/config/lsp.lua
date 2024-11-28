@@ -40,6 +40,13 @@ local function lsphandlers(lspconfig)
           }
         }
       }
+    end,
+    ["ts_ls"] = function()
+      lspconfig.ts_ls.setup({
+        settings = {
+          quoteStyle = "single"
+        }
+      })
     end
   }
 end
