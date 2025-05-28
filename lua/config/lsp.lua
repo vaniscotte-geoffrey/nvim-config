@@ -7,7 +7,8 @@ local lspservers = {
   "lua_ls",
   "ts_ls",
   "jdtls",
-  "emmet_ls"
+  "emmet_ls",
+  "rust_analyzer"
 }
 
 local function lsphandlers(lspconfig)
