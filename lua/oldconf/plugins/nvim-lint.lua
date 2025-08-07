@@ -1,4 +1,4 @@
-local lint_command = require("commands.lintcommand")
+local lint_command = require("oldconf.commands.lintcommand")
 return {
   "mfussenegger/nvim-lint",
   event = {

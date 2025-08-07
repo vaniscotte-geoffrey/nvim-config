@@ -1,9 +1,5 @@
 return function(_, buffer)
-  local function nmap(keybind, callback, description)
-    local opts = { buffer = buffer, desc = description, silent = true }
-    local map = vim.keymap.set
-    map("n", keybind, callback, opts)
-  end
+  local nmap = require("nconf.utils.nmap")
 
   nmap("<leader>gR", "<cmd>Telescope lsp_references<CR>", "Show LSP references")
   nmap("<leader>gD", vim.lsp.buf.declaration, "Go to declaration")

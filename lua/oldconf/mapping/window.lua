@@ -1,4 +1,4 @@
-local nmap = require("utils.nmap")
+local nmap = require("oldconf.utils.nmap")
 
 nmap("<C-h>", "<C-w><C-h>", "Move focus to the left windows.")
 nmap("<C-j>", "<C-w><C-j>", "Move focus to the down windows.")

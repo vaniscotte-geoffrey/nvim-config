@@ -1,4 +1,4 @@
-local concattable = require("utils.concattable")
+local concattable = require("oldconf.utils.concattable")
 
 local lspservers = {
   "angularls",
@@ -13,7 +13,7 @@ local lspservers = {
 
 local function lsphandlers(lspconfig)
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
-  local on_attach = require("mapping.lsp")
+  local on_attach = require("oldconf.mapping.lsp")
   local opts = {
     on_attach = on_attach,
     capabilities = capabilities,

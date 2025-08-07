@@ -1,4 +1,4 @@
-local hasfloatingwin = require("utils.has-floating-window")
+local hasfloatingwin = require("oldconf.utils.has-floating-window")
  
 local augrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

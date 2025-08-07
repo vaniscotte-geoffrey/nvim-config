@@ -5,9 +5,9 @@ return {
   },
   config = function()
     local oil = require("oil")
-    local oil_configs = require("config.oil")
+    local oil_configs = require("oldconf.config.oil")
  
     oil.setup(oil_configs)
-    require("mapping.oil")
+    require("oldconf.mapping.oil")
   end,
 }

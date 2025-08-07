@@ -1,4 +1,4 @@
-local nmap = require("utils.nmap")
+local nmap = require("nconf.utils.nmap")
 
 nmap("<s-tab>", "<cmd>BufferPrevious<cr>", "Go to the previous tab")
 nmap("<tab>", "<cmd>BufferNext<cr>", "Go to the next tab")

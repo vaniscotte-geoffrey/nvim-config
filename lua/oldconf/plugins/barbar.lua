@@ -14,7 +14,7 @@ return {
       insert_at_start = true,
     });
     ---@diagnostic disable-next-line: different-requires
-    require("mapping.barbar");
+    require("oldconf.mapping.barbar");
   end,
   version = '^1.0.0', -- optional: only update when a new 1.x version is released
 }

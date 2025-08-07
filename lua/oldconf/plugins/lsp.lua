@@ -1,4 +1,4 @@
-local lsp = require("config.lsp")
+local lsp = require("oldconf.config.lsp")
 return {
   {
     "williamboman/mason.nvim",
