@@ -1,102 +1,62 @@
 return {
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗"
-        }
-      }
-    }
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      {
-        "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
-      },
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp" }
-    },
-    config = function()
-      local lspconfig = require("lspconfig")
-      local mason_lspconfig = require("mason-lspconfig")
+	-- add pyright to lspconfig
+	{
+		"neovim/nvim-lspconfig",
+		---@class PluginLspOpts
+		opts = {
+			---@type lspconfig.options
+			servers = {
+				-- pyright will be automatically installed with mason and loaded with lspconfig
+				pyright = {},
+			},
+		},
+	},
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      local function nmap(keybind, callback, description)
-        local opts = { buffer = buffer, desc = description, silent = true }
-        vim.keymap.set("n", keybind, callback, opts)
-      end
-
-      local on_attach = function()
-        nmap("<leader>gR", "<cmd>Telescope lsp_references<CR>", "Show LSP references")
-        nmap("<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
-        nmap("<leader>gd", "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions")
-        nmap("<leader>gi", "<cmd>Telescope lsp_implementations<CR>", "Show LSP implementations")
-        nmap("<leader>gt", "<cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions")
-        nmap("<leader>ca", vim.lsp.buf.code_action, "See available code actions")
-        nmap("<leader>rn", vim.lsp.buf.rename, "Smart rename")
-        nmap("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics")
-        nmap("<leader>d", vim.diagnostic.open_float, "Show line diagnostics")
-        nmap("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
-        nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
-        nmap("K", vim.lsp.buf.hover, "Show documentation for what is under cursor")
-        nmap("<leader>rs", ":LspRestart<CR>", "Restart LSP")
-      end
-
-      local opts = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
-
-      local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
-
-      mason_lspconfig.setup({
-        ensure_installed = {
-          "angularls",
-          "cssls",
-          "html",
-          "lua_ls",
-          "ts_ls",
-          "jdtls",
-          "emmet_ls",
-          "rust_analyzer"
-        },
-        automatic_installation = true,
-        handlers = {
-          function(servername)
-            lspconfig[servername].setup(opts)
-          end,
-          ["lua_ls"] = function()
-            lspconfig.lua_ls.setup {
-              on_attach = on_attach,
-              capabilities = capabilities,
-              settings = {
-                Lua = {
-                  diagnostics = {
-                    globals = { "vim" }
-                  },
-                }
-              }
-            }
-          end,
-          ["ts_ls"] = function()
-            lspconfig.ts_ls.setup({
-              settings = {
-                quoteStyle = "single"
-              }
-            })
-          end
-        }
-      })
-    end
-  },
+	-- add tsserver and setup with typescript.nvim instead of lspconfig
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"jose-elias-alvarez/typescript.nvim",
+			init = function()
+				require("lazyvim.util").lsp.on_attach(function(_, buffer)
+					-- stylua: ignore
+					vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
+					vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
+				end)
+			end,
+		},
+		---@class PluginLspOpts
+		opts = {
+			---@type lspconfig.options
+			---@diagnostic disable-next-line: missing-fields
+			servers = {
+				-- tsserver will be automatically installed with mason and loaded with lspconfig
+				tsserver = {},
+				eslint = {},
+			},
+			-- you can do any additional lsp server setup here
+			-- return true if you don't want this server to be setup with lspconfig
+			---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+			setup = {
+				-- Specify * to use this function as a fallback for any server
+				-- ["*"] = function(server, opts) end,
+				-- example to setup with typescript.nvim
+				tsserver = function(_, opts)
+					require("typescript").setup({ server = opts })
+					return true
+				end,
+				eslint = function()
+					require("lazyvim.util").lsp.on_attach(function(client)
+						if client.name == "eslint" then
+							client.server_capabilities.documentFormattingProvider = true
+						elseif client.name == "tsserver" then
+							client.server_capabilities.documentFormattingProvider = false
+						else
+							return
+						end
+					end)
+				end,
+			},
+		},
+	},
 }

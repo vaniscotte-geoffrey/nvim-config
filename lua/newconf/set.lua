@@ -11,7 +11,7 @@ vim.opt.list = true
 vim.opt.listchars = "eol:.,tab:>-,trail:~,extends:>,precedes:<"
 
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes:1"
 vim.opt.scrolloff = 8
@@ -31,7 +31,7 @@ vim.opt.smartcase =true
 vim.opt.termguicolors = true
 
 -- No automatic comment insertion
-vim.cmd([[autocmd FileType * set formatoptions-=ro]])
+-- vim.cmd([[autocmd FileType * set formatoptions-=ro]])
 
 vim.g.clipboard = {
   name = 'win32yank-wsl',
