@@ -47,7 +47,7 @@ return {
           }
         end
 
-        lspconfig[server].setup(opts)
+        vim.lsp.config(server, opts)
       end
     end,
   },

@@ -5,7 +5,7 @@ return {
   },
   config = function()
     local oil = require("oil")
-    local oil_configs = require("newconf.config.oil")
+    local oil_configs = require("conf.config.oil")
     oil.setup(oil_configs)
     local map = vim.keymap.set
     local opts = { silent = true }

@@ -4,7 +4,7 @@ return {
     "echasnovski/mini.icons",
   },
   config = function()
-    local oil = require("oil")
+    local oil = require("lua.conf.config.oil")
     local oil_configs = {
       float = {
         preview_split = "right",

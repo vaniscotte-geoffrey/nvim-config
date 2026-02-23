@@ -43,42 +43,11 @@ return {
       desc = "Debug Print",
     },
     {
-      "<leader>rp",
-      function()
-        require("refactoring").debug.print_var({ normal = true })
-      end,
-      desc = "Debug Print Variable",
-    },
-    {
       "<leader>rc",
       function()
         require("refactoring").debug.cleanup({})
       end,
       desc = "Debug Cleanup",
-    },
-    {
-      "<leader>rf",
-      function()
-        require("refactoring").refactor("Extract Function")
-      end,
-      mode = "v",
-      desc = "Extract Function",
-    },
-    {
-      "<leader>rF",
-      function()
-        require("refactoring").refactor("Extract Function To File")
-      end,
-      mode = "v",
-      desc = "Extract Function To File",
-    },
-    {
-      "<leader>rx",
-      function()
-        require("refactoring").refactor("Extract Variable")
-      end,
-      mode = "v",
-      desc = "Extract Variable",
     },
     {
       "<leader>rp",

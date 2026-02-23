@@ -1,4 +1,2 @@
-require("newconf")
+require("conf")
 -- require("nconf")
--- require("presetconf")
--- require("oldconf")
